@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "Objet.hpp"
+#include "PossedeInventaire.hpp"
 
 using namespace std;
 
@@ -9,7 +10,7 @@ using namespace std;
 #define PROJET_PERSONNAGE_HPP
 
 
-class Personnage {
+class Personnage: PossedeInventaire {
 public:
     vector<Objet*> inventaire;
 private:
