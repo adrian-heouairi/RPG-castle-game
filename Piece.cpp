@@ -4,10 +4,6 @@ bool Piece::aEscalier() {
     return false;
 }
 
-const vector<struct Objet *> *const Piece::getObjets() const {
+const vector<Objet *> Piece::getObjets() const {
     return Objets;
-}
-
-void Piece::enleverObjet(Objet *const &pObjet) {
-
 }
