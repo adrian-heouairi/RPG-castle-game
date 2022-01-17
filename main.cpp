@@ -4,6 +4,10 @@
 #include <stdio.h>
 #include <random>
 
+#include "Objet.hpp"
+#include "Personnage.hpp"
+#include "Piece.hpp"
+
 using namespace std;
 
 Personnage *joueur;
@@ -13,6 +17,7 @@ int maxJ;
 Piece *pieceActuelle;
 vector<Personnage *> ennemis;
 int numeroTour = 1;
+int etage = 1;
 
 string prompt = "> ";
 string prompt2 = ">> ";
