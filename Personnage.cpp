@@ -42,7 +42,3 @@ int Personnage::getPosJ() const {
 void Personnage::setPosJ(int posJ) {
     Personnage::posJ = posJ;
 }
-
-const vector<Objet *> &Personnage::getInventaire() const {
-    return inventaire;
-}
