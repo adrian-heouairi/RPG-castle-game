@@ -6,17 +6,14 @@
 #include "PossedeInventaire.hpp"
 #include "Objet.hpp"
 
-class Piece: PossedeInventaire {
+class Piece: public PossedeInventaire {
     vector<Objet*> Objets;
 
 public:
-    const vector<struct Objet *> *const getObjets() const;
+    const vector<Objet *> getObjets() const;
 
     bool aEscalier();
 
-    void ajouterObjet(Objet *const &pObjet);
-
-    void enleverObjet(Objet *const &pObjet);
 };
 
 
