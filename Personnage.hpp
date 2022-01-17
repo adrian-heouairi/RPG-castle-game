@@ -10,9 +10,7 @@ using namespace std;
 #define PROJET_PERSONNAGE_HPP
 
 
-class Personnage: PossedeInventaire {
-public:
-    vector<Objet*> inventaire;
+class Personnage: public PossedeInventaire {
 private:
     string nom;
     int sante;
@@ -40,8 +38,6 @@ public:
     int getPosJ() const;
 
     void setPosJ(int posJ);
-
-    const vector<Objet *> &getInventaire() const;
 };
 
 
