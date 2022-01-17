@@ -3,10 +3,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include "PossedeInventaire.hpp"
 #include "Objet.hpp"
 
-class Piece {
+class Piece: PossedeInventaire {
     vector<Objet*> Objets;
 
 public:
