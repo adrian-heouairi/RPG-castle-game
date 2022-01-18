@@ -9,7 +9,7 @@ private:
 public:
     bool inventaireADeLaPlace();
 
-    const vector<Objet *> getInventaire() const;
+    const vector<Objet *> &getInventaire() const;
 
     void inventaireEnlever(Objet *objet);
 
