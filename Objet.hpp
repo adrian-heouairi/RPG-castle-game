@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "Personnage.hpp"
 using namespace std;
 
 class Objet {
