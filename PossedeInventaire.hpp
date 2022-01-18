@@ -4,16 +4,12 @@
 using namespace std;
 
 class PossedeInventaire {
-public:
+private:
     vector<Objet*> inventaire;
-
+public:
     bool inventaireADeLaPlace();
 
-    void ajouterObjet(Objet *const &pObjet);
-
-    void enleverObjet(Objet *const &pObjet);
-
-    const vector<Objet *> &getInventaire() const;
+    const vector<Objet *> getInventaire() const;
 
     void inventaireEnlever(Objet *objet);
 
