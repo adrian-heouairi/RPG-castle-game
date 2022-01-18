@@ -78,6 +78,12 @@ bool combatEnnemisDansLaMemePiece() {
     for (Personnage *ennemi : ennemisDansLaMemePiece) {
         cout << "Combat contre " << ennemi->getNom() << endl;
 
+        cout << "Santé : " << joueur->getSante();
+        cout << separateur;
+        cout << "Habileté : " << joueur->getHabilete();
+        cout << separateur;
+        cout << "Santé de l'ennemi : " << ennemi->getSante() << endl;
+
         while (joueur->getSante() > 0 && ennemi->getSante() > 0) {
             vector<Objet *> objetsUtilisablesEnCombat;
             for (Objet *o : joueur->getInventaire()) {
@@ -89,10 +95,8 @@ bool combatEnnemisDansLaMemePiece() {
             for (int i = 0; i < objetsUtilisablesEnCombat.size(); i++) {
                 cout << i + 1 << " : " << objetsUtilisablesEnCombat.at(i)->getNom() << endl;
             }
-            cout << "e : Frapper au poing" << endl;
-            cout << "Santé du joueur : " << joueur->getSante();
-            cout << separateur;
-            cout << "Santé de l'ennemi : " << ennemi->getSante() << endl;
+            cout << "r : Frapper au poing" << endl;
+            
             cout << prompt2;
 
             bool tourCombatDuJoueurFini = false;
@@ -120,9 +124,9 @@ bool combatEnnemisDansLaMemePiece() {
                         tourCombatDuJoueurFini = true;
                     }
                 }
-                else if (c == 'e') {
+                else if (c == 'r') {
                     // Ici joueur frappe ennemi au poing
-                    ennemi->setSante(ennemi->getSante() - 3);
+                    ennemi->setSante(ennemi->getSante() - joueur->getDegatsAuPoing());
                     tourCombatDuJoueurFini = true;
                 }
                 else {
@@ -133,7 +137,7 @@ bool combatEnnemisDansLaMemePiece() {
             if (joueur->getSante() <= 0 || ennemi->getSante() <= 0) break;
 
             // Ici, ennemi frappe joueur
-            joueur->setSante(joueur->getSante() - 3);
+            joueur->setSante(joueur->getSante() - ennemi->getDegatsAuPoing());
         }
 
         // Si le joueur a perdu
@@ -174,16 +178,20 @@ void ecranTitre() {
     } while (choixDeClasse < 1 || choixDeClasse > 4);
 
     if (choixDeClasse == 1) {
-        joueur = new Moine;
+        joueur = new Moine{100};
+        joueur->inventaireAjouter(new Baton{10});
     }
     else if (choixDeClasse == 2) {
-        joueur = new Guerrier;
+        joueur = new Guerrier{120};
+        joueur->inventaireAjouter(new Epee{8});
     }
     else if (choixDeClasse == 3) {
-        joueur = new Sorciere;
+        joueur = new Sorciere{90};
+        joueur->inventaireAjouter(new BaguetteMagique{13});
     }
     else if (choixDeClasse == 4) {
-        joueur = new Amazone;
+        joueur = new Amazone{100};
+        joueur->inventaireAjouter(new Arc{10});
     }
 
     joueur->setNom(nomDuJoueur);
@@ -229,18 +237,20 @@ void genererEtage() {
                     carte.at(i).at(j)->inventaireAjouter(new PotionDeSoin);
                 }
                 else if (51 <= rand && rand <= 80) {
+                    int degatsArme = getRandomIntBetween(1, 50);
+
                     int rand2 = getRandomIntBetween(1, 100);
                     if (1 <= rand2 && rand2 <= 25) {
-                        carte.at(i).at(j)->inventaireAjouter(new Baton);
+                        carte.at(i).at(j)->inventaireAjouter(new Baton{degatsArme});
                     }
                     else if (26 <= rand2 && rand2 <= 50) {
-                        carte.at(i).at(j)->inventaireAjouter(new Epee);
+                        carte.at(i).at(j)->inventaireAjouter(new Epee{degatsArme});
                     }
                     else if (51 <= rand2 && rand2 <= 75) {
-                        carte.at(i).at(j)->inventaireAjouter(new BaguetteMagique);
+                        carte.at(i).at(j)->inventaireAjouter(new BaguetteMagique{degatsArme + 5});
                     }
                     else if (76 <= rand2 && rand2 <= 100) {
-                        carte.at(i).at(j)->inventaireAjouter(new Arc);
+                        carte.at(i).at(j)->inventaireAjouter(new Arc{degatsArme});
                     }
                 }
                 else if (81 <= rand && rand <= 90) {
@@ -262,10 +272,6 @@ void afficherEtat() {
     cout << "Tour " << numeroTour;
     cout << separateur;
     cout << "Etage " << etage;
-    cout << separateur;
-    cout << "Nom : " << joueur->getNom();
-    cout << separateur;
-    cout << "Type : ";
     cout << separateur;
     cout << "Position : (" << joueur->getPosI() << "," << joueur->getPosJ() << ")";
     cout << separateur;
@@ -300,7 +306,7 @@ void afficherEtat() {
     
     if (pieceActuelle->aEscalier()) {
         cout << separateur;
-        cout << "Monter escalier : appuyez sur e";
+        cout << "Appuyez sur e pour monter l'escalier de cette pièce";
     }
 
     cout << endl;
@@ -435,6 +441,8 @@ void afficherAide() {
     cout << "Ramasser un objet : r";
     cout << separateur;
     cout << "Monter un escalier : e";
+    cout << separateur;
+    cout << "Quitter : l";
 }
 
 int main() {
@@ -540,6 +548,10 @@ int main() {
         // Car le joueur s'est peut-être déplacé ou téléporté
         pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
 
+        // La santé et l'habileté du joueur se régénèrent de 1 par tour hors combat
+        joueur->setSante(joueur->getSante() + 1);
+        joueur->setHabilete(joueur->getHabilete() + 1);
+
         faireBougerLesEnnemis();
 
         // Apparition aléatoire d'un ennemi avec 5 % de probabilité
@@ -548,16 +560,16 @@ int main() {
 
             int rand = getRandomIntBetween(1, 100);
             if (1 <= rand && rand <= 25) {
-                nouvelEnnemi = new Moine;
+                nouvelEnnemi = new Moine{30};
             }
             else if (26 <= rand && rand <= 50) {
-                nouvelEnnemi = new Guerrier;
+                nouvelEnnemi = new Guerrier{40};
             }
             else if (51 <= rand && rand <= 75) {
-                nouvelEnnemi = new Sorciere;
+                nouvelEnnemi = new Sorciere{25};
             }
             else if (76 <= rand && rand <= 100) {
-                nouvelEnnemi = new Amazone;
+                nouvelEnnemi = new Amazone{30};
             }
 
             nouvelEnnemi->setPosI(getRandomIntBetween(0, maxI));
