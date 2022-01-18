@@ -1,9 +1,10 @@
 #ifndef PROJET_POSSEDEINVENTAIRE_HPP
 #define PROJET_POSSEDEINVENTAIRE_HPP
 
-
+#include <iostream>
 #include <vector>
 #include "Objet.hpp"
+using namespace std;
 
 class PossedeInventaire {
 public:
