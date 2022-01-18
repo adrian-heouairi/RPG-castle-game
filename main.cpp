@@ -8,16 +8,35 @@
 #include "Personnage.hpp"
 #include "Piece.hpp"
 
+#include "Moine.hpp"
+#include "Guerrier.hpp"
+#include "Sorciere.hpp"
+#include "Amazone.hpp"
+
+#include "Baton.hpp"
+#include "Epee.hpp"
+#include "BaguetteMagique.hpp"
+#include "Arc.hpp"
+
+#include "PotionDeSoin.hpp"
+#include "PotionDePoison.hpp"
+
+#include "CleDeTeleportation.hpp"
+
 using namespace std;
 
-Personnage *joueur;
+const int TAILLE_MIN_CARTE = 5;
+const int TAILLE_MAX_CARTE = 15;
+
+// Variables globales qui contiennent l'état du jeu
+Personnage *joueur; // Instancié dans ecranTitre()
 vector<vector<Piece *>> carte;
 int maxI;
 int maxJ;
 Piece *pieceActuelle;
 vector<Personnage *> ennemis;
 int numeroTour = 1;
-int etage = 1;
+int etage = 0;
 
 string prompt = "> ";
 string prompt2 = ">> ";
@@ -40,63 +59,7 @@ int getRandomIntBetween(int a, int b) {
     return dist(rng);
 }
 
-// Retourne vrai en cas de victoire du joueur
-bool combat(Personnage *ennemi) {
-    cout << "Combat contre " << ennemi->getNom() << endl;
-
-    while (joueur->getSante() > 0 && ennemi->getSante() > 0) {
-        vector<Objet *> objetsUtilisablesEnCombat;
-        for (Objet *o : joueur->getInventaire()) {
-            if (o->isUtilisableEnCombat(joueur)) {
-                objetsUtilisablesEnCombat.push_back(o);
-            }
-        }
-        for (int i = 0; i < objetsUtilisablesEnCombat.size(); i++) {
-            cout << i + 1 << " : " << objetsUtilisablesEnCombat.at(i)->getNom() << endl;
-        }
-        cout << "e : Frapper au poing" << endl;
-        cout << "Santé du joueur : " << joueur->getSante() <<
-        " | Santé de l'ennemi : " << ennemi->getSante() << endl;
-        cout << prompt2;
-
-        bool tourCombatDuJoueurFini = false;
-        while (!tourCombatDuJoueurFini) {
-            char c = getChar();
-            if ('1' <= c && c <= '9') {
-                int index = c - 48 - 1;
-                if (index < objetsUtilisablesEnCombat.size()) {
-                    objetsUtilisablesEnCombat.at(index)->utiliserEnCombat();
-                    // Ici, éventuellement enlever l'objet de l'inventaire du joueur
-                    tourCombatDuJoueurFini = true;
-                }
-            }
-            else if (c == 'e') {
-                // Ici joueur frappe ennemi au poing
-                tourCombatDuJoueurFini = true;
-            }
-            else {
-                cout << "Erreur : tapez autre chose" << endl;
-            }
-        }
-
-        if (joueur->getSante() <= 0 || ennemi->getSante() <= 0) break;
-
-        // Ici, ennemi frappe joueur
-    }
-
-    if (joueur->getSante() <= 0) {
-        return false;
-    }
-
-    for (int i = 0; i < ennemis.size(); i++) {
-        if (ennemis.at(i) == ennemi) {
-            ennemis.erase(ennemis.begin() + i);
-        }
-    }
-    delete ennemi;
-    return true;
-}
-
+// Retourne true en cas de survie du joueur
 bool combatEnnemisDansLaMemePiece() {
     vector<Personnage *> ennemisDansLaMemePiece;
     for (Personnage *ennemi : ennemis) {
@@ -104,17 +67,91 @@ bool combatEnnemisDansLaMemePiece() {
             ennemisDansLaMemePiece.push_back(ennemi);
         }
     }
-    if (ennemisDansLaMemePiece.size() > 0) {
-        cout << "Vous devez combattre " << ennemisDansLaMemePiece.size() <<
-        " ennemi(s) dans cette pièce" << endl;
-        for (Personnage *ennemi : ennemisDansLaMemePiece) {
-            if (!combat(ennemi)) {
-                cout << "Vous êtes mort" << endl;
-                return false;
-            }
-        }
+    
+    if (ennemisDansLaMemePiece.size() == 0) {
+        return true;
     }
 
+    cout << "Vous devez combattre " << ennemisDansLaMemePiece.size() <<
+    " ennemi(s) dans cette pièce" << endl;
+    
+    for (Personnage *ennemi : ennemisDansLaMemePiece) {
+        cout << "Combat contre " << ennemi->getNom() << endl;
+
+        while (joueur->getSante() > 0 && ennemi->getSante() > 0) {
+            vector<Objet *> objetsUtilisablesEnCombat;
+            for (Objet *o : joueur->getInventaire()) {
+                if (o->isUtilisableEnCombat(joueur)) {
+                    objetsUtilisablesEnCombat.push_back(o);
+                }
+            }
+            
+            for (int i = 0; i < objetsUtilisablesEnCombat.size(); i++) {
+                cout << i + 1 << " : " << objetsUtilisablesEnCombat.at(i)->getNom() << endl;
+            }
+            cout << "e : Frapper au poing" << endl;
+            cout << "Santé du joueur : " << joueur->getSante();
+            cout << separateur;
+            cout << "Santé de l'ennemi : " << ennemi->getSante() << endl;
+            cout << prompt2;
+
+            bool tourCombatDuJoueurFini = false;
+            while (!tourCombatDuJoueurFini) {
+                char c = getChar();
+                if ('1' <= c && c <= '9') {
+                    int index = c - 48 - 1;
+                    if (index < objetsUtilisablesEnCombat.size()) {
+                        // Pour le cas où le joueur se téléporte
+                        int posIAvant = joueur->getPosI();
+                        int posJAvant = joueur->getPosJ();
+
+                        objetsUtilisablesEnCombat.at(index)->utiliserEnCombat(joueur, ennemi);
+                        if (objetsUtilisablesEnCombat.at(index)->isConsommable()) {
+                           joueur->inventaireEnlever(objetsUtilisablesEnCombat.at(index));
+                            delete objetsUtilisablesEnCombat.at(index);
+                        }
+
+                        // Le joueur s'est téléporté
+                        if (posIAvant != joueur->getPosI() || posJAvant != joueur->getPosJ()) {
+                            pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
+                            return true;
+                        }
+
+                        tourCombatDuJoueurFini = true;
+                    }
+                }
+                else if (c == 'e') {
+                    // Ici joueur frappe ennemi au poing
+                    ennemi->setSante(ennemi->getSante() - 3);
+                    tourCombatDuJoueurFini = true;
+                }
+                else {
+                    cout << "Erreur : tapez autre chose" << endl;
+                }
+            }
+
+            if (joueur->getSante() <= 0 || ennemi->getSante() <= 0) break;
+
+            // Ici, ennemi frappe joueur
+            joueur->setSante(joueur->getSante() - 3);
+        }
+
+        // Si le joueur a perdu
+        if (joueur->getSante() <= 0) {
+            cout << "Vous êtes mort" << endl;
+            return false;
+        }
+
+        // Si le joueur a gagné, l'ennemi meurt et on passe au suivant
+        for (int i = 0; i < ennemis.size(); i++) {
+            if (ennemis.at(i) == ennemi) {
+                ennemis.erase(ennemis.begin() + i);
+            }
+        }
+        delete ennemi;
+    }
+
+    // Le joueur a survécu à tous les combats
     return true;
 }
 
@@ -136,13 +173,88 @@ void ecranTitre() {
         cin >> choixDeClasse;
     } while (choixDeClasse < 1 || choixDeClasse > 4);
 
-    joueur->setNom(nomDuJoueur);
-    joueur->setPosI(0);
-    joueur->setPosJ(0);
-    // Ici mettre des objets aléatoirement dans certaines pièces de la carte
-    // Une des pièces doit avoir un escalier
-    // Ici set maxI et maxJ
+    if (choixDeClasse == 1) {
+        joueur = new Moine;
+    }
+    else if (choixDeClasse == 2) {
+        joueur = new Guerrier;
+    }
+    else if (choixDeClasse == 3) {
+        joueur = new Sorciere;
+    }
+    else if (choixDeClasse == 4) {
+        joueur = new Amazone;
+    }
 
+    joueur->setNom(nomDuJoueur);
+}
+
+void genererEtage() {
+    etage++;
+
+    for (Personnage *e : ennemis) {
+        delete e;
+    }
+    ennemis.clear();
+
+    for (vector<Piece *> i : carte) {
+        for (Piece *j : i) {
+            delete j;
+        }
+    }
+    carte.clear();
+
+    maxI = getRandomIntBetween(TAILLE_MIN_CARTE - 1, TAILLE_MAX_CARTE - 1);
+    maxJ = getRandomIntBetween(TAILLE_MIN_CARTE - 1, TAILLE_MAX_CARTE - 1);
+
+    for (int i = 0; i <= maxI; i++) {
+        carte.push_back(vector<Piece *>{});
+    }
+
+    for (int i = 0; i <= maxI; i++) {
+        for (int j = 0; j <= maxJ; j++) {
+            carte.at(i).at(j) = new Piece;
+        }
+    }
+
+    int escalierI = getRandomIntBetween(0, maxI);
+    int escalierJ = getRandomIntBetween(0, maxJ);
+    carte.at(escalierI).at(escalierJ)->setEscalier(true);
+
+    for (int i = 0; i <= maxI; i++) {
+        for (int j = 0; j <= maxJ; j++) {
+            if (getRandomIntBetween(1, 100) <= 5) {
+                int rand = getRandomIntBetween(1, 100);
+                if (1 <= rand && rand <= 50) {
+                    carte.at(i).at(j)->inventaireAjouter(new PotionDeSoin);
+                }
+                else if (51 <= rand && rand <= 80) {
+                    int rand2 = getRandomIntBetween(1, 100);
+                    if (1 <= rand2 && rand2 <= 25) {
+                        carte.at(i).at(j)->inventaireAjouter(new Baton);
+                    }
+                    else if (26 <= rand2 && rand2 <= 50) {
+                        carte.at(i).at(j)->inventaireAjouter(new Epee);
+                    }
+                    else if (51 <= rand2 && rand2 <= 75) {
+                        carte.at(i).at(j)->inventaireAjouter(new BaguetteMagique);
+                    }
+                    else if (76 <= rand2 && rand2 <= 100) {
+                        carte.at(i).at(j)->inventaireAjouter(new Arc);
+                    }
+                }
+                else if (81 <= rand && rand <= 90) {
+                    carte.at(i).at(j)->inventaireAjouter(new PotionDePoison);
+                }
+                else if (91 <= rand && rand <= 100) {
+                    carte.at(i).at(j)->inventaireAjouter(new CleDeTeleportation);
+                }
+            }
+        }
+    }
+    
+    joueur->setPosI(getRandomIntBetween(0, maxI));
+    joueur->setPosJ(getRandomIntBetween(0, maxJ));
     pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
 }
 
@@ -153,7 +265,7 @@ void afficherEtat() {
     cout << separateur;
     cout << "Nom : " << joueur->getNom();
     cout << separateur;
-    cout << "Classe : ";
+    cout << "Type : ";
     cout << separateur;
     cout << "Position : (" << joueur->getPosI() << "," << joueur->getPosJ() << ")";
     cout << separateur;
@@ -210,17 +322,19 @@ bool utiliserObjetHorsCombat() {
         cout << prompt2;
         int choix = getChar() - 48 - 1;
         if (0 <= choix && choix < objetsUtilisables.size()) {
-            joueur->inventaireEnlever(objetsUtilisables.at(choix));
-            objetsUtilisables.at(choix)->utiliser();
-            delete objetsUtilisables.at(choix);
+            objetsUtilisables.at(choix)->utiliserHorsCombat(joueur);
+            if (objetsUtilisables.at(choix)->isConsommable()) {
+                joueur->inventaireEnlever(objetsUtilisables.at(choix));
+                delete objetsUtilisables.at(choix);
+            }
             return true;
         }
     }
     return false;
 }
 
-bool poserObjet() { // TODO ici vérifier pieceActuelle->inventaireADeLaPlace() ?
-    if (joueur->getInventaire().size() > 0) {
+bool poserObjet() {
+    if (joueur->getInventaire().size() > 0 && pieceActuelle->inventaireADeLaPlace()) {
         for (int i = 0; i < joueur->getInventaire().size(); i++) {
             cout << i + 1 << " : " << joueur->getInventaire().at(i)->getNom() << endl;
         }
@@ -257,15 +371,7 @@ bool ramasserObjet() {
 
 bool monterEscalier() {
     if (pieceActuelle->aEscalier()) {
-        for (Personnage *e : ennemis) {
-            delete e;
-        }
-        ennemis.clear();
-        // Ici détruire tous les objets dans les pièces
-        // Ici regénérer une carte
-        joueur->setPosI(0);
-        joueur->setPosJ(0);
-        pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
+        genererEtage();
         return true;
     }
     return false;
@@ -317,8 +423,23 @@ void faireBougerLesEnnemis() {
     }
 }
 
+void afficherAide() {
+    cout << "Se déplacer : zqsd/wasd";
+    cout << separateur;
+    cout << "Attendre : espace";
+    cout << separateur;
+    cout << "Utiliser un objet : u";
+    cout << separateur;
+    cout << "Poser un objet : p";
+    cout << separateur;
+    cout << "Ramasser un objet : r";
+    cout << separateur;
+    cout << "Monter un escalier : e";
+}
+
 int main() {
     ecranTitre();
+    genererEtage();
 
     while (1) {
         if (!combatEnnemisDansLaMemePiece()) {
@@ -337,7 +458,7 @@ int main() {
             case 'z': case 'w':
                 if (joueur->getPosI() > 0) {
                     joueur->setPosI(joueur->getPosI() - 1);
-                    pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
+                    //pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
                     tourDuJoueurFini = true;
                 }
                 break;
@@ -345,7 +466,7 @@ int main() {
             case 'q': case 'a':
                 if (joueur->getPosJ() > 0) {
                     joueur->setPosJ(joueur->getPosJ() - 1);
-                    pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
+                    //pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
                     tourDuJoueurFini = true;
                 }
                 break;
@@ -353,7 +474,7 @@ int main() {
             case 's':
                 if (joueur->getPosI() < maxI) {
                     joueur->setPosI(joueur->getPosI() + 1);
-                    pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
+                    //pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
                     tourDuJoueurFini = true;
                 }
                 break;
@@ -361,7 +482,7 @@ int main() {
             case 'd':
                 if (joueur->getPosJ() < maxJ) {
                     joueur->setPosJ(joueur->getPosJ() + 1);
-                    pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
+                    //pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
                     tourDuJoueurFini = true;
                 }
                 break;
@@ -371,9 +492,7 @@ int main() {
                 break;
 
             case 'h':
-                cout << " Se déplacer : zqsd/wasd | Attendre : Espace | "
-                "Utiliser un objet : u | "
-                "Poser un objet : p | Ramasser un objet : r | Monter un escalier : e";
+                afficherAide();
                 break;
 
             case 'u':
@@ -401,7 +520,9 @@ int main() {
                 break;
 
             case 'l':
-                cout << "Voulez-vous vraiment quitter ? Oui : o | Non : Autre touche" << endl;
+                cout << "Voulez-vous vraiment quitter ? Oui : o";
+                cout << separateur;
+                cout << "Non : Autre touche" << endl;
                 cout << prompt2;
                 if (getChar() == 'o') {
                     return;
@@ -416,11 +537,29 @@ int main() {
             cout << endl;
         }
 
+        // Car le joueur s'est peut-être déplacé ou téléporté
+        pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
+
         faireBougerLesEnnemis();
 
         // Apparition aléatoire d'un ennemi avec 5 % de probabilité
         if (getRandomIntBetween(1, 100) <= 5) {
             Personnage *nouvelEnnemi;
+
+            int rand = getRandomIntBetween(1, 100);
+            if (1 <= rand && rand <= 25) {
+                nouvelEnnemi = new Moine;
+            }
+            else if (26 <= rand && rand <= 50) {
+                nouvelEnnemi = new Guerrier;
+            }
+            else if (51 <= rand && rand <= 75) {
+                nouvelEnnemi = new Sorciere;
+            }
+            else if (76 <= rand && rand <= 100) {
+                nouvelEnnemi = new Amazone;
+            }
+
             nouvelEnnemi->setPosI(getRandomIntBetween(0, maxI));
             nouvelEnnemi->setPosJ(getRandomIntBetween(0, maxJ));
             ennemis.push_back(nouvelEnnemi);
