@@ -14,4 +14,8 @@ public:
     void enleverObjet(Objet *const &pObjet);
 
     const vector<Objet *> &getInventaire() const;
+
+    void inventaireEnlever(Objet *objet);
+
+    void inventaireAjouter(Objet *objet);
 };

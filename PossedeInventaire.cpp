@@ -20,3 +20,11 @@ void PossedeInventaire::enleverObjet(Objet *const &pObjet) {
     vector<Objet *> inventaire = getInventaire();
     inventaire.erase(pObjet);
 }
+
+void inventaireEnlever(Objet *objet){
+
+}
+
+void inventaireAjouter(Objet *objet){
+    
+}

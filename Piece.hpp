@@ -14,4 +14,5 @@ public:
 
     bool aEscalier();
 
+    void inventaireAjouter(Objet *objet);
 };

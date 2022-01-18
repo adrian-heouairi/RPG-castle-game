@@ -1,6 +1,7 @@
 #include "Objet.hpp"
+#include "Personnage.hpp"
 
-bool Objet::isUtilisableEnCombat() {
+bool Objet::isUtilisableEnCombat(Personnage *joueur) {
     return false;
 }
 
@@ -12,14 +13,18 @@ void Objet::setNom(const string &nom) {
     Nom = nom;
 }
 
-void Objet::utiliserEnCombat() {
+void Objet::utiliserEnCombat(Personnage *joueur, Personnage *ennemi) {
 
 }
 
-bool Objet::isUtilisable() {
+bool Objet::isUtilisableHorsCombat(Personnage *joueur) {
     return false;
 }
 
-void Objet::utiliser() {
+void Objet::utiliserHorsCombat(Personnage *joueur) {
 
+}
+
+bool isConsommable(){
+    return false;
 }

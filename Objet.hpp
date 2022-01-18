@@ -7,15 +7,17 @@ private:
     string Nom;
 
 public:
-    bool isUtilisableEnCombat();
+    bool isUtilisableEnCombat(Personnage *joueur);
 
     const string &getNom() const;
 
     void setNom(const string &nom);
 
-    void utiliserEnCombat();
+    void utiliserEnCombat(Personnage *joueur, Personnage *ennemi);
 
-    bool isUtilisable();
+    bool isUtilisableHorsCombat(Personnage *joueur);
 
-    void utiliser();
+    void utiliserHorsCombat(Personnage *joueur);
+
+    bool isConsommable();
 };

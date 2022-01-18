@@ -7,3 +7,7 @@ bool Piece::aEscalier() {
 const vector<Objet *> Piece::getObjets() const {
     return Objets;
 }
+
+void inventaireAjouter(Objet *objet){
+    
+}
