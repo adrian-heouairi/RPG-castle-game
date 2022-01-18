@@ -6,17 +6,13 @@
 
 using namespace std;
 
-#ifndef PROJET_PERSONNAGE_HPP
-#define PROJET_PERSONNAGE_HPP
-
-
 class Personnage: public PossedeInventaire {
 private:
     string nom;
     int sante;
-    int habilete{};
-    int posI{};
-    int posJ{};
+    int habilete{0};
+    int posI{0};
+    int posJ{0};
 
 public:
     const string &getNom() const;
@@ -39,6 +35,3 @@ public:
 
     void setPosJ(int posJ);
 };
-
-
-#endif //PROJET_PERSONNAGE_HPP

@@ -2,10 +2,6 @@
 #include <string>
 using namespace std;
 
-#ifndef PROJET_OBJET_HPP
-#define PROJET_OBJET_HPP
-
-
 class Objet {
 private:
     string Nom;
@@ -23,6 +19,3 @@ public:
 
     void utiliser();
 };
-
-
-#endif //PROJET_OBJET_HPP
