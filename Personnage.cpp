@@ -42,3 +42,13 @@ int Personnage::getPosJ() const {
 void Personnage::setPosJ(int posJ) {
     Personnage::posJ = posJ;
 }
+
+Personnage::Personnage(int sante){
+        this->sante = sante;
+}
+
+Personnage::Personnage(){}
+
+int getDegatsAuPoing(){
+    return 0;
+}
