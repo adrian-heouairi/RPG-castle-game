@@ -1,5 +1,3 @@
-#ifndef PROJET_PIECE_HPP
-#define PROJET_PIECE_HPP
 #include <iostream>
 #include <string>
 #include <vector>
@@ -17,6 +15,3 @@ public:
     bool aEscalier();
 
 };
-
-
-#endif //PROJET_PIECE_HPP
