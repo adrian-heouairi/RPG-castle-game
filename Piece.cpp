@@ -1,7 +1,7 @@
 #include "Piece.hpp"
 
 bool Piece::aEscalier() {
-    return false;
+    return this->escalier;
 }
 
 const vector<Objet *> Piece::getObjets() const {
