@@ -34,4 +34,10 @@ public:
     int getPosJ() const;
 
     void setPosJ(int posJ);
+
+    Personnage(int sante);
+
+    Personnage();
+
+    int getDegatsAuPoing();
 };
