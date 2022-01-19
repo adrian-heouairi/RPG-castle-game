@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Baton.hpp"
+#include "Moine.hpp"
 using namespace std;
 
 Baton::Baton(int degats): Arme(degats){}

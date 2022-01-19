@@ -4,6 +4,7 @@
 #include "Arme.hpp"
 
 class Arc: public Arme{
+public:
     Arc(int degats);
     bool isUtilisableEnCombat(Personnage *joueur) override;
 };

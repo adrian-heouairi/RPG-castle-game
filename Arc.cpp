@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Arc.hpp"
+#include "Guerrier.hpp"
 using namespace std;
 
 Arc::Arc(int degats) : Arme(degats) {}

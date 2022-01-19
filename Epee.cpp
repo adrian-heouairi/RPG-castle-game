@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Epee.hpp"
+#include "Guerrier.hpp"
 using namespace std;
 
 Epee::Epee(int degats): Arme(degats){}

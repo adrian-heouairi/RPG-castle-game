@@ -1,5 +1,6 @@
 #include <iostream>
 #include "BaguetteMagique.hpp"
+#include "Sorciere.hpp"
 using namespace std;
 
 BaguetteMagique::BaguetteMagique(int degats): Arme(degats){}
