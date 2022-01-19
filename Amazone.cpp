@@ -4,6 +4,6 @@ Amazone::Amazone(int sante) : Personnage(sante) {
     setNom("Amazone");
 }
 
-int Amazone::getDegatsAuPoing{
+int Amazone::getDegatsAuPoing(){
     return 7;
 }
