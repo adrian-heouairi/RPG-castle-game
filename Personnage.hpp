@@ -17,6 +17,9 @@ private:
     int posI{0};
     int posJ{0};
 
+protected:
+    Personnage(int sante);
+
 public:
     string getNom() const;
 
@@ -37,8 +40,6 @@ public:
     int getPosJ() const;
 
     void setPosJ(int posJ);
-
-    //Personnage(int sante);
 
     virtual int getDegatsAuPoing() = 0;
 

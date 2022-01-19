@@ -21,3 +21,10 @@ void PossedeInventaire::inventaireEnlever(Objet *objet) {
 void PossedeInventaire::inventaireAjouter(Objet *objet) {
     inventaire.push_back(objet);
 }
+
+PossedeInventaire::~PossedeInventaire() {
+    for (Objet *o : inventaire) {
+        delete o;
+    }
+    cout << "Debug : destruction d'un inventaire" << endl;
+}

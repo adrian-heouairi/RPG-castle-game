@@ -2,5 +2,6 @@
 #include <iostream>
 using namespace std;
 
-Moine::Moine(int sante): Personnage(sante){}
-Moine::Moine(){}
+Moine::Moine(int sante) : Personnage(sante) {
+    setNom("Moine");
+}

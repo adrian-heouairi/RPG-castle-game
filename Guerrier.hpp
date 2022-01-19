@@ -4,7 +4,8 @@
 #include "Personnage.hpp"
 
 class Guerrier: public Personnage{
-
+public:
+    Guerrier(int sante);
 };
 
 #endif

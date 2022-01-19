@@ -17,6 +17,8 @@ public:
     void inventaireEnlever(Objet *objet);
 
     void inventaireAjouter(Objet *objet);
+
+    ~PossedeInventaire();
 };
 
 #endif

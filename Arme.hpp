@@ -7,6 +7,9 @@ class Arme: public Objet {
 private:
     int degats;
 
+protected:
+    Arme(int degats);
+
 public:
     //virtual bool isUtilisableEnCombat(Personnage *joueur) = 0;
 

@@ -18,3 +18,7 @@ void Arme::utiliserHorsCombat(Personnage *joueur) { }
 bool Arme::isConsommable() {
 	return false;
 }
+
+Arme::Arme(int degats) {
+    this->degats = degats;
+}

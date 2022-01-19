@@ -43,9 +43,9 @@ void Personnage::setPosJ(int posJ) {
     Personnage::posJ = posJ;
 }
 
-//Personnage::Personnage(int sante){
-//        this->sante = sante;
-//}
+Personnage::Personnage(int sante) {
+        this->sante = sante;
+}
 
 bool Personnage::inventaireADeLaPlace() {
     return this->getInventaire().size() < 6;
