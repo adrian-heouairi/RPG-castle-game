@@ -24,6 +24,8 @@ public:
     virtual void utiliserHorsCombat(Personnage *joueur) = 0;
 
     virtual bool isConsommable() = 0;
+
+    virtual ~Objet() = default;
 };
 
 

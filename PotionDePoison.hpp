@@ -9,17 +9,17 @@ private:
 public:
     PotionDePoison();
 
-    bool isUtilisableEnCombat(Personnage *joueur);
+    bool isUtilisableEnCombat(Personnage *joueur) override;
 
-    string getNom();
+    string getNom() const override;
 
-    void utiliserEnCombat(Personnage *joueur, Personnage *ennemi);
+    void utiliserEnCombat(Personnage *joueur, Personnage *ennemi) override;
 
-    bool isUtilisableHorsCombat(Personnage *joueur);
+    bool isUtilisableHorsCombat(Personnage *joueur) override;
 
-    void utiliserHorsCombat(Personnage *joueur);
+    void utiliserHorsCombat(Personnage *joueur) override;
     
-    bool isConsommable();
+    bool isConsommable() override;
 };
 
 #endif

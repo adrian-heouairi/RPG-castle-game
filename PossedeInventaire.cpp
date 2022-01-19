@@ -10,7 +10,7 @@ const vector<Objet *> &PossedeInventaire::getInventaire() const {
 }
 
 void PossedeInventaire::inventaireEnlever(Objet *objet) {
-    for (int i = 0; i < inventaire.size(); i++) {
+    for (int i = 0; i < (int)inventaire.size(); i++) {
         if (inventaire.at(i) == objet) {
             inventaire.erase(inventaire.begin() + i);
             break;

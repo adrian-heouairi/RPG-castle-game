@@ -44,6 +44,8 @@ public:
     virtual int getDegatsAuPoing() = 0;
 
     bool inventaireADeLaPlace() override;
+
+    virtual ~Personnage() = default;
 };
 
 #endif

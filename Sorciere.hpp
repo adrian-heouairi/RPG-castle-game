@@ -6,7 +6,7 @@
 class Sorciere: public Personnage{
 public:
     Sorciere(int sante);
-    int getDegatsAuPoing();
+    int getDegatsAuPoing() override;
 };
 
 #endif

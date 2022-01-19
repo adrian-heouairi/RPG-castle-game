@@ -17,6 +17,8 @@ public:
     void setEscalier(bool escalier);
 
     bool inventaireADeLaPlace() override;
+
+    virtual ~Piece() = default;
 };
 
 #endif

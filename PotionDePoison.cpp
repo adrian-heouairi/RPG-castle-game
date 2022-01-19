@@ -6,26 +6,24 @@ PotionDePoison::PotionDePoison(){
     this->sante = 100;
 }
 
-bool isUtilisableEnCombat(Personnage *joueur){
+bool PotionDePoison::isUtilisableEnCombat(Personnage *joueur){
     return true;
 }
 
-string getNom(){
+string PotionDePoison::getNom() const {
     return "Potion De Poison";
 }
 
-void utiliserEnCombat(Personnage *joueur, Personnage *ennemi){
-    joueur->setSante(joueur->getSante() - 100);
+void PotionDePoison::utiliserEnCombat(Personnage *joueur, Personnage *ennemi){
+    ennemi->setSante(ennemi->getSante() - 100);
 }
 
-bool isUtilisableHorsCombat(Personnage *joueur){
-    return true;
-}
-
-void utiliserHorsCombat(Personnage *joueur){
-    joueur->setSante(joueur->getSante() - 100);
-}
-    
-bool isConsommable(){
+bool PotionDePoison::isUtilisableHorsCombat(Personnage *joueur){
     return false;
+}
+
+void PotionDePoison::utiliserHorsCombat(Personnage *joueur) { }
+    
+bool PotionDePoison::isConsommable() {
+    return true;
 }

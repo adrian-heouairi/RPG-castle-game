@@ -6,7 +6,7 @@
 class Guerrier: public Personnage{
 public:
     Guerrier(int sante);
-    int getDegatsAuPoing();
+    int getDegatsAuPoing() override;
 };
 
 #endif

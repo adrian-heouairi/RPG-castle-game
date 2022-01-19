@@ -92,7 +92,7 @@ bool combatEnnemisDansLaMemePiece() {
                 }
             }
             
-            for (int i = 0; i < objetsUtilisablesEnCombat.size(); i++) {
+            for (int i = 0; i < (int)objetsUtilisablesEnCombat.size(); i++) {
                 cout << i + 1 << " : " << objetsUtilisablesEnCombat.at(i)->getNom() << endl;
             }
             cout << "r : Frapper au poing" << endl;
@@ -104,7 +104,7 @@ bool combatEnnemisDansLaMemePiece() {
                 char c = getChar();
                 if ('1' <= c && c <= '9') {
                     int index = c - 48 - 1;
-                    if (index < objetsUtilisablesEnCombat.size()) {
+                    if (index < (int)objetsUtilisablesEnCombat.size()) {
                         // Pour le cas où le joueur se téléporte
                         int posIAvant = joueur->getPosI();
                         int posJAvant = joueur->getPosJ();
@@ -147,7 +147,7 @@ bool combatEnnemisDansLaMemePiece() {
         }
 
         // Si le joueur a gagné, l'ennemi meurt et on passe au suivant
-        for (int i = 0; i < ennemis.size(); i++) {
+        for (int i = 0; i < (int)ennemis.size(); i++) {
             if (ennemis.at(i) == ennemi) {
                 ennemis.erase(ennemis.begin() + i);
                 break;
@@ -282,7 +282,7 @@ void afficherEtat() {
     cout << separateur;
 
     cout << "Inventaire : [";
-    for (int i = 0; i < joueur->getInventaire().size(); i++) {
+    for (int i = 0; i < (int)joueur->getInventaire().size(); i++) {
         if (i != 0) {
             cout << ", ";
         }
@@ -293,7 +293,7 @@ void afficherEtat() {
     cout << separateur;
 
     cout << "Objets dans cette pièce : [";
-    for (int i = 0; i < pieceActuelle->getInventaire().size(); i++) {
+    for (int i = 0; i < (int)pieceActuelle->getInventaire().size(); i++) {
         if (i != 0) {
             cout << ", ";
         }
@@ -322,13 +322,13 @@ bool utiliserObjetHorsCombat() {
     }
 
     if (objetsUtilisables.size() > 0) {
-        for (int i = 0; i < objetsUtilisables.size(); i++) {
+        for (int i = 0; i < (int)objetsUtilisables.size(); i++) {
             cout << i + 1 << " : " << objetsUtilisables.at(i)->getNom() << endl;
         }
         cout << "Autre touche : Retour" << endl;
         cout << prompt2;
         int choix = getChar() - 48 - 1;
-        if (0 <= choix && choix < objetsUtilisables.size()) {
+        if (0 <= choix && choix < (int)objetsUtilisables.size()) {
             objetsUtilisables.at(choix)->utiliserHorsCombat(joueur);
             if (objetsUtilisables.at(choix)->isConsommable()) {
                 joueur->inventaireEnlever(objetsUtilisables.at(choix));
@@ -342,13 +342,13 @@ bool utiliserObjetHorsCombat() {
 
 bool poserObjet() {
     if (joueur->getInventaire().size() > 0 && pieceActuelle->inventaireADeLaPlace()) {
-        for (int i = 0; i < joueur->getInventaire().size(); i++) {
+        for (int i = 0; i < (int)joueur->getInventaire().size(); i++) {
             cout << i + 1 << " : " << joueur->getInventaire().at(i)->getNom() << endl;
         }
         cout << "Autre touche : Retour" << endl;
         cout << prompt2;
         int choix = getChar() - 48 - 1;
-        if (0 <= choix && choix < joueur->getInventaire().size()) {
+        if (0 <= choix && choix < (int)joueur->getInventaire().size()) {
             pieceActuelle->inventaireAjouter(joueur->getInventaire().at(choix));
             joueur->inventaireEnlever(joueur->getInventaire().at(choix));
             return true;
@@ -359,7 +359,7 @@ bool poserObjet() {
 
 bool ramasserObjet() {
     if (pieceActuelle->getInventaire().size() > 0 && joueur->inventaireADeLaPlace()) {
-        for (int i = 0; i < pieceActuelle->getInventaire().size(); i++) {
+        for (int i = 0; i < (int)pieceActuelle->getInventaire().size(); i++) {
             cout << i + 1 << " : " << pieceActuelle->getInventaire().at(i)->getNom() << endl;
         }
         cout << "Tapez un nombre puis entrée, ou autre chose pour annuler :" << endl;
@@ -367,7 +367,7 @@ bool ramasserObjet() {
         int choix;
         cin >> choix;
         choix--;
-        if (0 <= choix && choix < pieceActuelle->getInventaire().size()) {
+        if (0 <= choix && choix < (int)pieceActuelle->getInventaire().size()) {
             joueur->inventaireAjouter(pieceActuelle->getInventaire().at(choix));
             pieceActuelle->inventaireEnlever(pieceActuelle->getInventaire().at(choix));
             return true;
@@ -452,7 +452,7 @@ int main() {
 
     while (1) {
         if (!combatEnnemisDansLaMemePiece()) {
-            return;
+            return 0;
         }
 
         bool tourDuJoueurFini = false;
@@ -534,7 +534,7 @@ int main() {
                 cout << "Non : Autre touche" << endl;
                 cout << prompt2;
                 if (getChar() == 'o') {
-                    return;
+                    return 0;
                 }
                 break;
 
