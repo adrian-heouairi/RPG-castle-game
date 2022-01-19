@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Personnage.hpp"
-#include "Objet.hpp"
+//#include "Objet.hpp"
 
 const string &Personnage::getNom() const {
     return nom;
@@ -43,12 +43,10 @@ void Personnage::setPosJ(int posJ) {
     Personnage::posJ = posJ;
 }
 
-Personnage::Personnage(int sante){
-        this->sante = sante;
-}
+//Personnage::Personnage(int sante){
+//        this->sante = sante;
+//}
 
-Personnage::Personnage(){}
-
-int getDegatsAuPoing(){
-    return 0;
+bool Personnage::inventaireADeLaPlace() {
+    return this->getInventaire().size() < 6;
 }

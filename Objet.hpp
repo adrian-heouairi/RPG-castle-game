@@ -4,21 +4,21 @@
 using namespace std;
 
 class Objet {
-private:
-    string Nom;
+//private:
+//    string nom;
 
 public:
-    bool isUtilisableEnCombat(Personnage *joueur);
+    virtual bool isUtilisableEnCombat(Personnage *joueur) = 0;
 
-    const string &getNom() const;
+    virtual string getNom() = 0;
 
-    void setNom(const string &nom);
+    //void setNom(const string &nom);
 
-    void utiliserEnCombat(Personnage *joueur, Personnage *ennemi);
+    virtual void utiliserEnCombat(Personnage *joueur, Personnage *ennemi) = 0;
 
-    bool isUtilisableHorsCombat(Personnage *joueur);
+    virtual bool isUtilisableHorsCombat(Personnage *joueur) = 0;
 
-    void utiliserHorsCombat(Personnage *joueur);
+    virtual void utiliserHorsCombat(Personnage *joueur) = 0;
 
-    bool isConsommable();
+    virtual bool isConsommable() = 0;
 };

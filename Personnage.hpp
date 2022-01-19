@@ -1,16 +1,16 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Objet.hpp"
+//#include "Objet.hpp"
 #include "PossedeInventaire.hpp"
 
 using namespace std;
 
-class Personnage: public PossedeInventaire {
+class Personnage : public PossedeInventaire {
 private:
     string nom;
     int sante;
-    int habilete{0};
+    int habilete{10};
     int posI{0};
     int posJ{0};
 
@@ -35,9 +35,9 @@ public:
 
     void setPosJ(int posJ);
 
-    Personnage(int sante);
+    //Personnage(int sante);
 
-    Personnage();
+    virtual int getDegatsAuPoing() = 0;
 
-    int getDegatsAuPoing();
+    virtual bool inventaireADeLaPlace();
 };

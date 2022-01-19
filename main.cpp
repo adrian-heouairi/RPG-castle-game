@@ -150,6 +150,7 @@ bool combatEnnemisDansLaMemePiece() {
         for (int i = 0; i < ennemis.size(); i++) {
             if (ennemis.at(i) == ennemi) {
                 ennemis.erase(ennemis.begin() + i);
+                break;
             }
         }
         delete ennemi;

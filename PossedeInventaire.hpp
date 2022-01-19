@@ -5,9 +5,9 @@ using namespace std;
 
 class PossedeInventaire {
 private:
-    vector<Objet*> inventaire;
+    vector<Objet *> inventaire;
 public:
-    bool inventaireADeLaPlace();
+    virtual bool inventaireADeLaPlace() = 0;
 
     const vector<Objet *> &getInventaire() const;
 
