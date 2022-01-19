@@ -222,7 +222,7 @@ void genererEtage() {
 
     for (int i = 0; i <= maxI; i++) {
         for (int j = 0; j <= maxJ; j++) {
-            carte.at(i).at(j) = new Piece;
+            carte.at(i).push_back(new Piece);
         }
     }
 
