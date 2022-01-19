@@ -7,7 +7,7 @@ PotionDeSoin::PotionDeSoin(){
 }
 
 bool isUtilisableEnCombat(Personnage *joueur){
-    return false;
+    return true;
 }
 
 string getNom(){
@@ -15,9 +15,7 @@ string getNom(){
 }
 
 void utiliserEnCombat(Personnage *joueur, Personnage *ennemi){
-    if (isUtilisableEnCombat(joueur)){
-        ennemi->setSante(ennemi->getSante() - 100);
-    }    
+    ennemi->setSante(joueur->getSante() - 100);
 }
 
 bool isUtilisableHorsCombat(Personnage *joueur){
@@ -25,9 +23,7 @@ bool isUtilisableHorsCombat(Personnage *joueur){
 }
 
 void utiliserHorsCombat(Personnage *joueur){
-    if(isUtilisableHorsCombat){
-        joueur->setSante(joueur->getSante() + 100);
-    }
+    joueur->setSante(joueur->getSante() + 100);
 }
     
 bool isConsommable(){
