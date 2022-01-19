@@ -1,3 +1,6 @@
+#ifndef PIECE_HPP
+#define PIECE_HPP
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -16,3 +19,5 @@ public:
 
     void inventaireAjouter(Objet *objet);
 };
+
+#endif

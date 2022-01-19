@@ -1,3 +1,6 @@
+#ifndef OBJET_HPP
+#define OBJET_HPP
+
 #include <iostream>
 #include <string>
 #include "Personnage.hpp"
@@ -22,3 +25,6 @@ public:
 
     virtual bool isConsommable() = 0;
 };
+
+
+#endif

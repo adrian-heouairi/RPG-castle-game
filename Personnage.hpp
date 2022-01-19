@@ -1,3 +1,6 @@
+#ifndef PERSONNAGE_HPP
+#define PERSONNAGE_HPP
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -41,3 +44,5 @@ public:
 
     virtual bool inventaireADeLaPlace();
 };
+
+#endif

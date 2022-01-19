@@ -1,3 +1,6 @@
+#ifndef POSSEDEINVENTAIRE_HPP
+#define POSSEDEINVENTAIRE_HPP
+
 #include <iostream>
 #include <vector>
 #include "Objet.hpp"
@@ -15,3 +18,5 @@ public:
 
     void inventaireAjouter(Objet *objet);
 };
+
+#endif
