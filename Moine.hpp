@@ -6,6 +6,7 @@
 class Moine: public Personnage{
 public:
     Moine(int sante);
+    int getDegatsAuPoing();
 };
 
 #endif

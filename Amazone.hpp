@@ -6,6 +6,8 @@
 class Amazone: public Personnage{
 public:
     Amazone(int sante);
+    
+    int getDegatsAuPoing();
 };
 
 #endif
