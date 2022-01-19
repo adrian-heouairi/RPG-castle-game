@@ -18,7 +18,7 @@ private:
     int posJ{0};
 
 public:
-    const string &getNom() const;
+    string getNom() const;
 
     void setNom(const string &nom);
 
@@ -42,7 +42,7 @@ public:
 
     virtual int getDegatsAuPoing() = 0;
 
-    virtual bool inventaireADeLaPlace();
+    bool inventaireADeLaPlace() override;
 };
 
 #endif

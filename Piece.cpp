@@ -4,10 +4,10 @@ bool Piece::aEscalier() {
     return this->escalier;
 }
 
-const vector<Objet *> Piece::getObjets() const {
-    return Objets;
+void Piece::setEscalier(bool escalier) {
+    this->escalier = escalier;
 }
 
-void inventaireAjouter(Objet *objet){
-    
+bool Piece::inventaireADeLaPlace() {
+    return true;
 }

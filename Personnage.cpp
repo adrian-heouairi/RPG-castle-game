@@ -3,7 +3,7 @@
 #include "Personnage.hpp"
 //#include "Objet.hpp"
 
-const string &Personnage::getNom() const {
+string Personnage::getNom() const {
     return nom;
 }
 

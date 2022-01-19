@@ -9,15 +9,14 @@
 
 class Piece: public PossedeInventaire {
 private:
-    vector<Objet*> Objets;
-    bool escalier;
+    bool escalier = false;
 
 public:
-    const vector<Objet *> getObjets() const;
-
     bool aEscalier();
 
-    void inventaireAjouter(Objet *objet);
+    void setEscalier(bool escalier);
+
+    bool inventaireADeLaPlace() override;
 };
 
 #endif

@@ -7,15 +7,15 @@
 using namespace std;
 
 class Objet {
-//private:
-//    string nom;
+private:
+    string nom;
 
 public:
     virtual bool isUtilisableEnCombat(Personnage *joueur) = 0;
 
-    virtual string getNom() = 0;
+    virtual string getNom() const;
 
-    //void setNom(const string &nom);
+    virtual void setNom(const string &nom);
 
     virtual void utiliserEnCombat(Personnage *joueur, Personnage *ennemi) = 0;
 
