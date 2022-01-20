@@ -5,7 +5,7 @@
 
 class Amazone: public Personnage{
 public:
-    Amazone(int sante);
+    Amazone(int santeMax, int habileteMax);
     
     int getDegatsAuPoing() override;
 };

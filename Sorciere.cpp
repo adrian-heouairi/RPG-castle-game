@@ -2,7 +2,7 @@
 #include "Sorciere.hpp"
 using namespace std;
 
-Sorciere::Sorciere(int sante) : Personnage(sante) {
+Sorciere::Sorciere(int santeMax, int habileteMax) : Personnage(santeMax, habileteMax) {
     setNom("Sorcière");
 }
 

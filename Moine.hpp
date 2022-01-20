@@ -5,7 +5,7 @@
 
 class Moine: public Personnage{
 public:
-    Moine(int sante);
+    Moine(int santeMax, int habileteMax);
     int getDegatsAuPoing() override;
 };
 

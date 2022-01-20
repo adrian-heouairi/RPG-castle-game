@@ -27,7 +27,7 @@
 using namespace std;
 
 const int TAILLE_MIN_CARTE = 4;
-const int TAILLE_MAX_CARTE = 8;
+const int TAILLE_MAX_CARTE = 6;
 
 // Variables globales qui contiennent l'état du jeu
 Personnage *joueur; // Instancié dans ecranTitre()
@@ -92,11 +92,12 @@ bool combatEnnemisDansLaMemePiece() {
 
             bool tourCombatDuJoueurFini = false;
             while (!tourCombatDuJoueurFini) {
-                cout << "Santé : " << joueur->getSante();
+                cout << "Santé : " << joueur->getSante() << "/" << joueur->getSanteMax();
                 cout << separateur;
-                cout << "Habileté : " << joueur->getHabilete();
+                cout << "Habileté : " << joueur->getHabilete() << "/" << joueur->getHabileteMax();
                 cout << separateur;
-                cout << "Santé de l'ennemi : " << ennemi->getSante() << endl;
+                cout << "Santé de l'ennemi : " << ennemi->getSante() << "/" << ennemi->getSanteMax();
+                cout << endl;
 
                 for (int i = 0; i < (int)objetsUtilisablesEnCombat.size(); i++) {
                     cout << i + 1 << " : " << objetsUtilisablesEnCombat.at(i)->getNom() << endl;
@@ -186,19 +187,19 @@ void ecranTitre() {
     } while (choixDeClasse < 1 || choixDeClasse > 4);
 
     if (choixDeClasse == 1) {
-        joueur = new Moine{100};
+        joueur = new Moine{100, 30};
         joueur->inventaireAjouter(new Baton{10});
     }
     else if (choixDeClasse == 2) {
-        joueur = new Guerrier{120};
+        joueur = new Guerrier{120, 20};
         joueur->inventaireAjouter(new Epee{8});
     }
     else if (choixDeClasse == 3) {
-        joueur = new Sorciere{90};
+        joueur = new Sorciere{90, 50};
         joueur->inventaireAjouter(new BaguetteMagique{13});
     }
     else if (choixDeClasse == 4) {
-        joueur = new Amazone{100};
+        joueur = new Amazone{100, 30};
         joueur->inventaireAjouter(new Arc{10});
     }
 
@@ -239,7 +240,7 @@ void genererEtage() {
 
     for (int i = 0; i <= maxI; i++) {
         for (int j = 0; j <= maxJ; j++) {
-            if (getRandomIntBetween(1, 100) <= 10) {
+            if (getRandomIntBetween(1, 100) <= 20) {
                 int rand = getRandomIntBetween(1, 100);
                 if (1 <= rand && rand <= 50) {
                     carte.at(i).at(j)->inventaireAjouter(new PotionDeSoin);
@@ -284,9 +285,9 @@ void afficherEtat() {
     cout << "Position : (" << joueur->getPosI() << "," << joueur->getPosJ() << ")";
     cout << "/(" << maxI << "," << maxJ << ")";
     cout << separateur;
-    cout << "Santé : " << joueur->getSante();
+    cout << "Santé : " << joueur->getSante() << "/" << joueur->getSanteMax();
     cout << separateur;
-    cout << "Habileté : " << joueur->getHabilete();
+    cout << "Habileté : " << joueur->getHabilete() << "/" << joueur->getHabileteMax();
     cout << separateur;
 
     cout << "Inventaire : [";
@@ -564,22 +565,22 @@ int main() {
 
         faireBougerLesEnnemis();
 
-        // Apparition aléatoire d'un ennemi avec 5 % de probabilité
-        if (getRandomIntBetween(1, 100) <= 5) {
+        // Apparition aléatoire d'un ennemi avec 10 % de probabilité
+        if (getRandomIntBetween(1, 100) <= 10) {
             Personnage *nouvelEnnemi;
 
             int rand = getRandomIntBetween(1, 100);
             if (1 <= rand && rand <= 25) {
-                nouvelEnnemi = new Moine{30};
+                nouvelEnnemi = new Moine{30, 10};
             }
             else if (26 <= rand && rand <= 50) {
-                nouvelEnnemi = new Guerrier{40};
+                nouvelEnnemi = new Guerrier{40, 7};
             }
             else if (51 <= rand && rand <= 75) {
-                nouvelEnnemi = new Sorciere{25};
+                nouvelEnnemi = new Sorciere{25, 13};
             }
             else if (76 <= rand && rand <= 100) {
-                nouvelEnnemi = new Amazone{30};
+                nouvelEnnemi = new Amazone{30, 10};
             }
 
             nouvelEnnemi->setPosI(getRandomIntBetween(0, maxI));

@@ -1,6 +1,6 @@
 #include "Guerrier.hpp"
 
-Guerrier::Guerrier(int sante) : Personnage(sante) {
+Guerrier::Guerrier(int santeMax, int habileteMax) : Personnage(santeMax, habileteMax) {
     setNom("Guerrier");
 }
 

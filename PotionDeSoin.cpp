@@ -23,7 +23,7 @@ bool PotionDeSoin::isUtilisableHorsCombat(Personnage *joueur){
 }
 
 void PotionDeSoin::utiliserHorsCombat(Personnage *joueur){
-    joueur->setSante(joueur->getSante() + 100);
+    joueur->setSante(joueur->getSante() + 50);
 }
     
 bool PotionDeSoin::isConsommable(){

@@ -1,6 +1,6 @@
 #include "Amazone.hpp"
 
-Amazone::Amazone(int sante) : Personnage(sante) {
+Amazone::Amazone(int santeMax, int habileteMax) : Personnage(santeMax, habileteMax) {
     setNom("Amazone");
 }
 

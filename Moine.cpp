@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-Moine::Moine(int sante) : Personnage(sante) {
+Moine::Moine(int santeMax, int habileteMax) : Personnage(santeMax, habileteMax) {
     setNom("Moine");
 }
 

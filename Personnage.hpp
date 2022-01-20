@@ -13,12 +13,14 @@ class Personnage : public PossedeInventaire {
 private:
     string nom;
     int sante;
-    int habilete{10};
+    int habilete;
+    int santeMax;
+    int habileteMax;
     int posI{0};
     int posJ{0};
 
 protected:
-    Personnage(int sante);
+    Personnage(int santeMax, int habileteMax);
 
 public:
     string getNom() const;
@@ -26,10 +28,12 @@ public:
     void setNom(const string &nom);
 
     int getSante() const;
+    int getSanteMax() const;
 
     void setSante(int sante);
 
     int getHabilete() const;
+    int getHabileteMax() const;
 
     void setHabilete(int habilete);
 

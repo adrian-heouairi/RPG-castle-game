@@ -5,7 +5,7 @@
 
 class Guerrier: public Personnage{
 public:
-    Guerrier(int sante);
+    Guerrier(int santeMax, int habileteMax);
     int getDegatsAuPoing() override;
 };
 
