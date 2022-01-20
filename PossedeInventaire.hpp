@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include <vector>
-//#include "Objet.hpp"
+#include "Objet.hpp"
 using namespace std;
 
-class Objet;
+//class Objet;
 
 class PossedeInventaire {
 private:

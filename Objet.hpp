@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include <string>
-#include "Personnage.hpp"
+//#include "Personnage.hpp"
 using namespace std;
+
+class Personnage;
 
 class Objet {
 private:

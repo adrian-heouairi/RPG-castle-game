@@ -1,5 +1,6 @@
 #include <iostream>
 #include "PotionDeSoin.hpp"
+#include "Personnage.hpp"
 using namespace std;
 
 //PotionDeSoin::PotionDeSoin(){

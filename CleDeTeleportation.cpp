@@ -1,4 +1,5 @@
 #include "CleDeTeleportation.hpp"
+#include "Personnage.hpp"
 
 extern int maxI;
 extern int maxJ;
