@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <stdio.h>
+#include <stdlib.h>
 #include <random>
 
 #include "Objet.hpp"
@@ -25,8 +26,8 @@
 
 using namespace std;
 
-const int TAILLE_MIN_CARTE = 5;
-const int TAILLE_MAX_CARTE = 15;
+const int TAILLE_MIN_CARTE = 4;
+const int TAILLE_MAX_CARTE = 8;
 
 // Variables globales qui contiennent l'état du jeu
 Personnage *joueur; // Instancié dans ecranTitre()
@@ -49,9 +50,12 @@ char getChar() {
 
     cout << endl;
 
+    if (c == 3) exit(EXIT_SUCCESS);
+
     return c;
 }
 
+// Donne un entier entre a inclus et b inclus, tous les entiers sont équiprobables
 int getRandomIntBetween(int a, int b) {
     random_device dev;
     mt19937 rng(dev());
@@ -76,13 +80,7 @@ bool combatEnnemisDansLaMemePiece() {
     " ennemi(s) dans cette pièce" << endl;
     
     for (Personnage *ennemi : ennemisDansLaMemePiece) {
-        cout << "Combat contre " << ennemi->getNom() << endl;
-
-        cout << "Santé : " << joueur->getSante();
-        cout << separateur;
-        cout << "Habileté : " << joueur->getHabilete();
-        cout << separateur;
-        cout << "Santé de l'ennemi : " << ennemi->getSante() << endl;
+        cout << "Début du combat contre " << ennemi->getNom() << endl;
 
         while (joueur->getSante() > 0 && ennemi->getSante() > 0) {
             vector<Objet *> objetsUtilisablesEnCombat;
@@ -91,16 +89,21 @@ bool combatEnnemisDansLaMemePiece() {
                     objetsUtilisablesEnCombat.push_back(o);
                 }
             }
-            
-            for (int i = 0; i < (int)objetsUtilisablesEnCombat.size(); i++) {
-                cout << i + 1 << " : " << objetsUtilisablesEnCombat.at(i)->getNom() << endl;
-            }
-            cout << "r : Frapper au poing" << endl;
-            
-            cout << prompt2;
 
             bool tourCombatDuJoueurFini = false;
             while (!tourCombatDuJoueurFini) {
+                cout << "Santé : " << joueur->getSante();
+                cout << separateur;
+                cout << "Habileté : " << joueur->getHabilete();
+                cout << separateur;
+                cout << "Santé de l'ennemi : " << ennemi->getSante() << endl;
+
+                for (int i = 0; i < (int)objetsUtilisablesEnCombat.size(); i++) {
+                    cout << i + 1 << " : " << objetsUtilisablesEnCombat.at(i)->getNom() << endl;
+                }
+                cout << "r : Frapper au poing" << endl;
+
+                cout << prompt2;
                 char c = getChar();
                 if ('1' <= c && c <= '9') {
                     int index = c - 48 - 1;
@@ -123,6 +126,9 @@ bool combatEnnemisDansLaMemePiece() {
 
                         tourCombatDuJoueurFini = true;
                     }
+                    else {
+                        cout << "Touche invalide" << endl;
+                    }
                 }
                 else if (c == 'r') {
                     // Ici joueur frappe ennemi au poing
@@ -130,7 +136,7 @@ bool combatEnnemisDansLaMemePiece() {
                     tourCombatDuJoueurFini = true;
                 }
                 else {
-                    cout << "Erreur : tapez autre chose" << endl;
+                    cout << "Touche invalide" << endl;
                 }
             }
 
@@ -175,7 +181,8 @@ void ecranTitre() {
     int choixDeClasse = 0;
     do {
         cout << prompt;
-        cin >> choixDeClasse;
+        //cin >> choixDeClasse;
+        choixDeClasse = getChar() - 48;
     } while (choixDeClasse < 1 || choixDeClasse > 4);
 
     if (choixDeClasse == 1) {
@@ -232,7 +239,7 @@ void genererEtage() {
 
     for (int i = 0; i <= maxI; i++) {
         for (int j = 0; j <= maxJ; j++) {
-            if (getRandomIntBetween(1, 100) <= 5) {
+            if (getRandomIntBetween(1, 100) <= 10) {
                 int rand = getRandomIntBetween(1, 100);
                 if (1 <= rand && rand <= 50) {
                     carte.at(i).at(j)->inventaireAjouter(new PotionDeSoin);
@@ -275,6 +282,7 @@ void afficherEtat() {
     cout << "Etage " << etage;
     cout << separateur;
     cout << "Position : (" << joueur->getPosI() << "," << joueur->getPosJ() << ")";
+    cout << "/(" << maxI << "," << maxJ << ")";
     cout << separateur;
     cout << "Santé : " << joueur->getSante();
     cout << separateur;
@@ -362,11 +370,11 @@ bool ramasserObjet() {
         for (int i = 0; i < (int)pieceActuelle->getInventaire().size(); i++) {
             cout << i + 1 << " : " << pieceActuelle->getInventaire().at(i)->getNom() << endl;
         }
-        cout << "Tapez un nombre puis entrée, ou autre chose pour annuler :" << endl;
+        cout << "Tapez un nombre ou autre chose pour annuler :" << endl;
         cout << prompt2;
-        int choix;
-        cin >> choix;
-        choix--;
+        int choix = getChar() - 48 - 1;
+        //cin >> choix;
+        //choix--;
         if (0 <= choix && choix < (int)pieceActuelle->getInventaire().size()) {
             joueur->inventaireAjouter(pieceActuelle->getInventaire().at(choix));
             pieceActuelle->inventaireEnlever(pieceActuelle->getInventaire().at(choix));
@@ -423,7 +431,7 @@ void faireBougerLesEnnemis() {
                 break;
                 
             default:
-                cout << "Erreur";
+                cout << "Erreur déplacement ennemi";
                 break;
             }
         }
@@ -502,6 +510,7 @@ int main() {
 
             case 'h':
                 afficherAide();
+                cout << endl;
                 break;
 
             case 'u':
@@ -539,11 +548,11 @@ int main() {
                 break;
 
             default:
-                cout << "Erreur";
+                cout << "Touche invalide" << endl;
                 break;
             }
 
-            cout << endl;
+            //cout << endl;
         }
 
         // Car le joueur s'est peut-être déplacé ou téléporté

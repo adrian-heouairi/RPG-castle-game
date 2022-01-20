@@ -3,7 +3,9 @@
 #include "Moine.hpp"
 using namespace std;
 
-Baton::Baton(int degats): Arme(degats){}
+Baton::Baton(int degats): Arme(degats){
+    setNom("Bâton");
+}
 
 bool Baton::isUtilisableEnCombat(Personnage *joueur) {
     if (dynamic_cast<Moine *>(joueur)) return true;

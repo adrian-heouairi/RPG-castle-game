@@ -2,16 +2,16 @@
 #include "PotionDePoison.hpp"
 using namespace std;
 
-PotionDePoison::PotionDePoison(){
-    this->sante = 100;
-}
+//PotionDePoison::PotionDePoison(){
+//    this->sante = 100;
+//}
 
 bool PotionDePoison::isUtilisableEnCombat(Personnage *joueur){
     return true;
 }
 
 string PotionDePoison::getNom() const {
-    return "Potion De Poison";
+    return "Potion de poison";
 }
 
 void PotionDePoison::utiliserEnCombat(Personnage *joueur, Personnage *ennemi){

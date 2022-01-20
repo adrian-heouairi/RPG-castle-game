@@ -3,7 +3,9 @@
 #include "Guerrier.hpp"
 using namespace std;
 
-Epee::Epee(int degats): Arme(degats){}
+Epee::Epee(int degats): Arme(degats){
+    setNom("Epée");
+}
 
 bool Epee::isUtilisableEnCombat(Personnage *joueur) {
     if (dynamic_cast<Guerrier *>(joueur)) return true;

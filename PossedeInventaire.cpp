@@ -26,5 +26,5 @@ PossedeInventaire::~PossedeInventaire() {
     for (Objet *o : inventaire) {
         delete o;
     }
-    cout << "Debug : destruction d'un inventaire" << endl;
+    //cout << "Debug : destruction d'un inventaire" << endl;
 }

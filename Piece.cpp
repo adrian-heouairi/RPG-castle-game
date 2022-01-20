@@ -9,5 +9,5 @@ void Piece::setEscalier(bool escalier) {
 }
 
 bool Piece::inventaireADeLaPlace() {
-    return true;
+    return this->getInventaire().size() < 9;
 }

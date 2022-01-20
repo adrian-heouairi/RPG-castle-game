@@ -3,7 +3,9 @@
 #include "Guerrier.hpp"
 using namespace std;
 
-Arc::Arc(int degats) : Arme(degats) {}
+Arc::Arc(int degats) : Arme(degats) {
+    setNom("Arc");
+}
 
 bool Arc::isUtilisableEnCombat(Personnage *joueur) {
     if (dynamic_cast<Guerrier *>(joueur)) return true;
