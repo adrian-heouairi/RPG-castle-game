@@ -11,6 +11,7 @@ protected:
 public:
     string getNom() const override;
 
+    // Ces deux méthodes doivent être implémentées par les descendants :
     //virtual bool isUtilisableEnCombat(Personnage *utilisateur) = 0;
     //virtual void utiliserEnCombat(Personnage *utilisateur, Personnage *adversaire) = 0;
 

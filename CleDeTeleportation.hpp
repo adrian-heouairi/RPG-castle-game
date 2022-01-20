@@ -5,8 +5,6 @@
 
 class CleDeTeleportation: public Objet{
 public:
-    //CleDeTeleportation();
-
     string getNom() const override;
 
     bool isUtilisableEnCombat(Personnage *joueur) override;

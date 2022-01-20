@@ -1,10 +1,5 @@
 #include "PossedeInventaire.hpp"
 
-//bool PossedeInventaire::inventaireADeLaPlace() {
-//    int sizeInventaire = getInventaire().size;
-//    return sizeInventaire < 4;
-//}
-
 const vector<Objet *> &PossedeInventaire::getInventaire() const {
     return inventaire;
 }
@@ -26,5 +21,4 @@ PossedeInventaire::~PossedeInventaire() {
     for (Objet *o : inventaire) {
         delete o;
     }
-    //cout << "Debug : destruction d'un inventaire" << endl;
 }

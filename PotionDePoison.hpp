@@ -4,11 +4,7 @@
 #include "Objet.hpp"
 
 class PotionDePoison: public Objet{
-private:
-    //int sante;
 public:
-    //PotionDePoison();
-
     string getNom() const override;
 
     bool isUtilisableEnCombat(Personnage *joueur) override;

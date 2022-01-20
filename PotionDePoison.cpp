@@ -3,10 +3,6 @@
 #include "Personnage.hpp"
 using namespace std;
 
-//PotionDePoison::PotionDePoison(){
-//    this->sante = 100;
-//}
-
 bool PotionDePoison::isUtilisableEnCombat(Personnage *joueur){
     return true;
 }

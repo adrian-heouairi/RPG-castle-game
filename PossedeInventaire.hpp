@@ -6,8 +6,6 @@
 #include "Objet.hpp"
 using namespace std;
 
-//class Objet;
-
 class PossedeInventaire {
 private:
     vector<Objet *> inventaire;

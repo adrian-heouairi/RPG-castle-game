@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include "Personnage.hpp"
-//#include "Objet.hpp"
 
 string Personnage::getNom() const {
     return nom;

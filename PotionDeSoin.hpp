@@ -5,10 +5,7 @@
 using namespace std;
 
 class PotionDeSoin: public Objet{
-    //int soin;
 public:
-    //PotionDeSoin();
-
     string getNom() const override;
 
     bool isUtilisableEnCombat(Personnage *joueur) override;

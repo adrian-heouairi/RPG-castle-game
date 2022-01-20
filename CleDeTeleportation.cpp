@@ -5,10 +5,6 @@ extern int maxI;
 extern int maxJ;
 extern int getRandomIntBetween(int a, int b);
 
-//CleDeTeleportation::CleDeTeleportation() {
-//    setNom("Clé de téléportation");
-//}
-
 string CleDeTeleportation::getNom() const {
     return "Clé de téléportation";
 }

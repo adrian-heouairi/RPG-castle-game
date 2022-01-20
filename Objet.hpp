@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-//#include "Personnage.hpp"
 using namespace std;
 
 class Personnage;
@@ -11,9 +10,6 @@ class Personnage;
 class Objet {
 private:
     string nom;
-
-//protected:
-//    Objet();
 
 public:
     virtual string getNom() const;
@@ -28,7 +24,6 @@ public:
     virtual bool isConsommable() = 0;
 
     virtual ~Objet() = default;
-    //virtual ~Objet() { cout << "Debug : destruction d'un objet" << endl; }
 };
 
 

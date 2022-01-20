@@ -148,7 +148,6 @@ bool combatEnnemisDansLaMemePiece() {
             // Ici, ennemi frappe joueur avec son arme, qui est forcément le seul
             // objet de son inventaire
             ennemi->getInventaire().at(0)->utiliserEnCombat(ennemi, joueur);
-            //joueur->setSante(joueur->getSante() - ennemi->getDegatsAuPoing());
         }
 
         // Si le joueur a perdu
@@ -186,7 +185,6 @@ void ecranTitre() {
     int choixDeClasse = 0;
     do {
         cout << prompt;
-        //cin >> choixDeClasse;
         choixDeClasse = getChar() - 48;
     } while (choixDeClasse < 1 || choixDeClasse > 4);
 
@@ -378,8 +376,6 @@ bool ramasserObjet() {
         cout << "Tapez un nombre ou autre chose pour annuler :" << endl;
         cout << prompt2;
         int choix = getChar() - 48 - 1;
-        //cin >> choix;
-        //choix--;
         if (0 <= choix && choix < (int)pieceActuelle->getInventaire().size()) {
             joueur->inventaireAjouter(pieceActuelle->getInventaire().at(choix));
             pieceActuelle->inventaireEnlever(pieceActuelle->getInventaire().at(choix));
@@ -460,27 +456,31 @@ void afficherAide() {
 }
 
 int main() {
-    ecranTitre();
-    genererEtage();
+    ecranTitre(); // Crée l'objet qui représente le joueur
+    genererEtage(); // Génère la carte de l'étage et y place des objets aléatoirement
 
+    // Boucle principale du jeu
     while (1) {
+        // On commence le tour par se battre avec tous les ennemis présents dans
+        // la même pièce que nous, si la fonction retourne faux, on a perdu
         if (!combatEnnemisDansLaMemePiece()) {
             return 0;
         }
 
+        // Cette boucle s'exécute tant que le joueur n'effectue pas une action,
+        // par exemple s'il tape une touche qui ne correspond à aucune action
         bool tourDuJoueurFini = false;
         while (!tourDuJoueurFini) {
-            afficherEtat();
+            afficherEtat(); // Affiche toutes les informations comme la santé, la position, etc.
 
+            // On obtient un caractère tapé par le joueur
             cout << prompt;
-
             char c = getChar();
 
             switch (c) {
             case 'z': case 'w':
                 if (joueur->getPosI() > 0) {
                     joueur->setPosI(joueur->getPosI() - 1);
-                    //pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
                     tourDuJoueurFini = true;
                 }
                 break;
@@ -488,7 +488,6 @@ int main() {
             case 'q': case 'a':
                 if (joueur->getPosJ() > 0) {
                     joueur->setPosJ(joueur->getPosJ() - 1);
-                    //pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
                     tourDuJoueurFini = true;
                 }
                 break;
@@ -496,7 +495,6 @@ int main() {
             case 's':
                 if (joueur->getPosI() < maxI) {
                     joueur->setPosI(joueur->getPosI() + 1);
-                    //pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
                     tourDuJoueurFini = true;
                 }
                 break;
@@ -504,7 +502,6 @@ int main() {
             case 'd':
                 if (joueur->getPosJ() < maxJ) {
                     joueur->setPosJ(joueur->getPosJ() + 1);
-                    //pieceActuelle = carte.at(joueur->getPosI()).at(joueur->getPosJ());
                     tourDuJoueurFini = true;
                 }
                 break;
@@ -556,8 +553,6 @@ int main() {
                 cout << "Touche invalide" << endl;
                 break;
             }
-
-            //cout << endl;
         }
 
         // Car le joueur s'est peut-être déplacé ou téléporté
@@ -569,7 +564,7 @@ int main() {
 
         faireBougerLesEnnemis();
 
-        // Apparition aléatoire d'un ennemi avec 10 % de probabilité
+        // Apparition aléatoire d'un ennemi avec 10 % de probabilité à chaque tour
         if (getRandomIntBetween(1, 100) <= 10) {
             Personnage *nouvelEnnemi;
 
