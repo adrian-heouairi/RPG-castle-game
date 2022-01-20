@@ -7,6 +7,7 @@ class Baton: public Arme{
 public:
     Baton(int degats);
     bool isUtilisableEnCombat(Personnage *joueur) override;
+    void utiliserEnCombat(Personnage *utilisateur, Personnage *adversaire) override;
 };
 
 

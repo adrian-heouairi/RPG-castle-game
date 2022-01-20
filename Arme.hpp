@@ -4,17 +4,15 @@
 #include "Objet.hpp"
 
 class Arme: public Objet {
-private:
-    int degats;
-
 protected:
+    int degats;
     Arme(int degats);
 
 public:
     string getNom() const override;
 
     //virtual bool isUtilisableEnCombat(Personnage *utilisateur) = 0;
-    void utiliserEnCombat(Personnage *utilisateur, Personnage *adversaire) override;
+    //virtual void utiliserEnCombat(Personnage *utilisateur, Personnage *adversaire) = 0;
 
     bool isUtilisableHorsCombat(Personnage *joueur) override;
     void utiliserHorsCombat(Personnage *joueur) override;
