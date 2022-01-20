@@ -143,8 +143,10 @@ bool combatEnnemisDansLaMemePiece() {
 
             if (joueur->getSante() <= 0 || ennemi->getSante() <= 0) break;
 
-            // Ici, ennemi frappe joueur
-            joueur->setSante(joueur->getSante() - ennemi->getDegatsAuPoing());
+            // Ici, ennemi frappe joueur avec son arme, qui est forcément le seul
+            // objet de son inventaire
+            ennemi->getInventaire().at(0)->utiliserEnCombat(ennemi, joueur);
+            //joueur->setSante(joueur->getSante() - ennemi->getDegatsAuPoing());
         }
 
         // Si le joueur a perdu
@@ -569,18 +571,24 @@ int main() {
         if (getRandomIntBetween(1, 100) <= 10) {
             Personnage *nouvelEnnemi;
 
+            int difficulteCroissante = etage * 3;
+
             int rand = getRandomIntBetween(1, 100);
             if (1 <= rand && rand <= 25) {
-                nouvelEnnemi = new Moine{30, 10};
+                nouvelEnnemi = new Moine{30 + difficulteCroissante, 10 + difficulteCroissante};
+                nouvelEnnemi->inventaireAjouter(new Baton{10 + difficulteCroissante});
             }
             else if (26 <= rand && rand <= 50) {
-                nouvelEnnemi = new Guerrier{40, 7};
+                nouvelEnnemi = new Guerrier{40 + difficulteCroissante, 7 + difficulteCroissante};
+                nouvelEnnemi->inventaireAjouter(new Epee{8 + difficulteCroissante});
             }
             else if (51 <= rand && rand <= 75) {
-                nouvelEnnemi = new Sorciere{25, 13};
+                nouvelEnnemi = new Sorciere{25 + difficulteCroissante, 13 + difficulteCroissante};
+                nouvelEnnemi->inventaireAjouter(new BaguetteMagique{13 + difficulteCroissante});
             }
             else if (76 <= rand && rand <= 100) {
-                nouvelEnnemi = new Amazone{30, 10};
+                nouvelEnnemi = new Amazone{30 + difficulteCroissante, 10 + difficulteCroissante};
+                nouvelEnnemi->inventaireAjouter(new Arc{10 + difficulteCroissante});
             }
 
             nouvelEnnemi->setPosI(getRandomIntBetween(0, maxI));

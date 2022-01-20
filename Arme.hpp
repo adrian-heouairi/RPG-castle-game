@@ -13,8 +13,8 @@ protected:
 public:
     string getNom() const override;
 
-    //virtual bool isUtilisableEnCombat(Personnage *joueur) = 0;
-    void utiliserEnCombat(Personnage *joueur, Personnage *ennemi) override;
+    //virtual bool isUtilisableEnCombat(Personnage *utilisateur) = 0;
+    void utiliserEnCombat(Personnage *utilisateur, Personnage *adversaire) override;
 
     bool isUtilisableHorsCombat(Personnage *joueur) override;
     void utiliserHorsCombat(Personnage *joueur) override;

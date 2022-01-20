@@ -17,11 +17,11 @@ public:
     virtual string getNom() const;
     virtual void setNom(const string &nom);
 
-    virtual bool isUtilisableEnCombat(Personnage *joueur) = 0;
-    virtual void utiliserEnCombat(Personnage *joueur, Personnage *ennemi) = 0;
+    virtual bool isUtilisableEnCombat(Personnage *utilisateur) = 0;
+    virtual void utiliserEnCombat(Personnage *utilisateur, Personnage *adversaire) = 0;
 
-    virtual bool isUtilisableHorsCombat(Personnage *joueur) = 0;
-    virtual void utiliserHorsCombat(Personnage *joueur) = 0;
+    virtual bool isUtilisableHorsCombat(Personnage *utilisateur) = 0;
+    virtual void utiliserHorsCombat(Personnage *utilisateur) = 0;
 
     virtual bool isConsommable() = 0;
 
