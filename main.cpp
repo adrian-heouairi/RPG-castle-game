@@ -240,6 +240,7 @@ void genererEtage() {
     int escalierJ = getRandomIntBetween(0, maxJ);
     carte.at(escalierI).at(escalierJ)->setEscalier(true);
 
+    // Apparition aléatoire d'objets à l'étage
     for (int i = 0; i <= maxI; i++) {
         for (int j = 0; j <= maxJ; j++) {
             if (getRandomIntBetween(1, 100) <= 20) {
