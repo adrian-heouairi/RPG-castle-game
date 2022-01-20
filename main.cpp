@@ -574,19 +574,19 @@ int main() {
             int rand = getRandomIntBetween(1, 100);
             if (1 <= rand && rand <= 25) {
                 nouvelEnnemi = new Moine{30 + difficulteCroissante, 4 + difficulteCroissante};
-                nouvelEnnemi->inventaireAjouter(new Baton{5 + difficulteCroissante});
+                nouvelEnnemi->inventaireAjouter(new Baton{3 + difficulteCroissante});
             }
             else if (26 <= rand && rand <= 50) {
                 nouvelEnnemi = new Guerrier{40 + difficulteCroissante, 3 + difficulteCroissante};
-                nouvelEnnemi->inventaireAjouter(new Epee{4 + difficulteCroissante});
+                nouvelEnnemi->inventaireAjouter(new Epee{2 + difficulteCroissante});
             }
             else if (51 <= rand && rand <= 75) {
                 nouvelEnnemi = new Sorciere{25 + difficulteCroissante, 6 + difficulteCroissante};
-                nouvelEnnemi->inventaireAjouter(new BaguetteMagique{7 + difficulteCroissante});
+                nouvelEnnemi->inventaireAjouter(new BaguetteMagique{4 + difficulteCroissante});
             }
             else if (76 <= rand && rand <= 100) {
                 nouvelEnnemi = new Amazone{30 + difficulteCroissante, 5 + difficulteCroissante};
-                nouvelEnnemi->inventaireAjouter(new Arc{5 + difficulteCroissante});
+                nouvelEnnemi->inventaireAjouter(new Arc{3 + difficulteCroissante});
             }
 
             nouvelEnnemi->setPosI(getRandomIntBetween(0, maxI));
